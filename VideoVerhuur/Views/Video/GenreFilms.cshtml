@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Films>
+@{
+	ViewData["Title"] = "GenreFilms";
+}
+
+@if (Model.Count() == 0)
+{
+<p>Er zijn momenteel geen reserveringen.</p>
+}
+else {
+<table class="table table-bordered">
+	<thead> 
+		<tr>
+			<td>Titel</td> 
+			<td>Prijs</td>
+			<td>In voorraad</td>		
+			<td>Huren</td> 
+
+		</tr> 
+	</thead>
+	<tbody>
+			@foreach (var film in Model)
+			{
+				<tr>
+					<td>@film.Titel</td>
+					<td>@film.Prijs</td>
+					<td>@film.InVoorraad</td>
+					@if (@film.InVoorraad > 0)
+					{
+						<td><a asp-action="FilmVerhuren" asp-route-id="@film.FilmId">
+								<img class="icon" src="~/images/plus.png" asp-append-version="true" />
+						</a>
+					</td>
+					}
+
+
+				</tr>
+			}
+	</tbody>
+	</table>
+
+	<a class="btn btn-lg btn-warning" asp-action="Genres">Terug naar genre overzicht</a>
+		
+
+}

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Films>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td>Titel</td>
+				<td>Prijs</td>
+				<td>Verwijderen</td>
+				<td>x</td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var film in Model)
+			{
+				<tr>
+					<td>@film.Titel</td>
+					<td>@film.Prijs</td>
+					<td>
+						<a asp-action="VerwijderFilm" asp-route-id="@film.FilmId">
+							<img class="icon" src="~/images/delete.png" asp-append-version="true" />
+						</a>
+					</td>
+					<td>@ViewBag.x</td>
+
+
+				</tr>
+			}
+		</tbody>
+	</table>
+
+<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.ToList()[Model.Count()-1].GenreId">
+	Verder winkelen</a>
+
+<a class="btn btn-lg btn-warning" asp-action="Afrekenen">
+Afrekenen</a>
+
+

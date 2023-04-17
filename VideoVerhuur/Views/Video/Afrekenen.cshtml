@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Films>
+@{
+		ViewData["Title"] = "Afrekenen";
+}
+<p>Afrekenen</p>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Titel</td>
+			<td>Prijs</td>
+
+		</tr>
+	</thead>
+	<tbody>
+
+		@foreach (var film in Model)
+		{
+			<tr>
+				<td>@film.Titel</td>
+				<td>@film.Prijs</td>
+			</tr>
+			
+		}
+		<tr>
+			<td>@ViewBag.totaal</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Wordt afgereknd aan: </h3>
+<h4>@ViewBag.Naam</h4>
+<h4>@ViewBag.Adres</h4>
+<h4>@ViewBag.Gemeente</h4>

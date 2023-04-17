@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Genres> 
+@{
+	ViewData["Title"] = "Genres";
+}
+
+<h2>Genres</h2>
+<h3>Welkom @ViewBag.Klant @ViewBag.Naam  </h3>
+<h4>Klik op het gewenste genre</h4>
+@if (Model == null || Model.Count() == 0)
+{
+	<h3>Er zijn geen Genres gevonden</h3>
+}
+else
+{
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				@foreach (var Genre in Model)
+				{
+					<td><a asp-action="GenreFilms" asp-route-id="@Genre.GenreId">@Genre.GenreNaam</a></td>
+
+				}
+			</tr>
+		</thead>	
+	</table>
+
+	
+}
