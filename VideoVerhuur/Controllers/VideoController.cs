@@ -21,16 +21,11 @@ public class VideoController : Controller
 		var sessionVariabeNaam = HttpContext.Session.GetString("Naam");
 		var sessionVariablePostcode = HttpContext.Session.GetInt32("Postcode");
 		if (sessionVariabeNaam == null || sessionVariablePostcode == null)
-		{
+			return Redirect("Login");
 
-			return View("Login");
-
-		}
-		else
-		{
 
 			return Redirect("Genres");
-		}
+		
 
 	}
 
@@ -44,7 +39,7 @@ public class VideoController : Controller
 			list = new List<LoginViewModel>();
 
 			LoginViewModel loginViewModel = new LoginViewModel();
-			return View("login", loginViewModel);
+			return View("Login", loginViewModel);
 
 		}
 		else
@@ -52,7 +47,7 @@ public class VideoController : Controller
 			var sessionVariabeklantId = HttpContext.Session.GetInt32("klantID");
 
 			if (sessionVariabeklantId <= 0)
-				return View(Login);
+				return Redirect("Login");
 				
 			return Redirect("Genres");
 
@@ -61,14 +56,14 @@ public class VideoController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult loginVerify(string naam, int postcode)
+	public IActionResult LoginVerify(string naam, int postcode)
 	{
 
 		
 		if (naam == null || postcode == 0)
 		{
 			//ViewBag.ErrorMessage("Er is geen aangemelde gebruiker");
-			return View("login");
+			return View("Login");
 		}
 
 		else
@@ -78,7 +73,7 @@ public class VideoController : Controller
 			Klanten? klant = CheckGebruiker(naam, postcode);
 			if(klant == null)
 			{
-				return View("login");
+				return View("Login");
 			}
 			else
 			{
@@ -105,7 +100,7 @@ public class VideoController : Controller
 		var klantid = HttpContext.Session.GetInt32("klantID");
 		if (klantid == null)
 		{
-			return View("login");
+			return View("Login");
 		}
 		else
 		{
@@ -145,7 +140,7 @@ public class VideoController : Controller
 		List<Films> ff = new List<Films>();
 			if (film != null && lijstVerhuurdFilms != null)
 			{
-				videoService.adjustFilmStock(id);
+				//videoService.adjustFilmStock(id);
 			bool x = lijstVerhuurdFilms.Contains(film);
 			ViewBag.x = x;
 				if (!lijstVerhuurdFilms.Contains((object)film))
@@ -204,10 +199,14 @@ public class VideoController : Controller
 		if (sessionVariabeklantId != null)
 		{
 			var klant = videoService.FindKlant((int)sessionVariabeklantId);
-			ViewBag.klantID = sessionVariabeklantId;
-			ViewBag.Naam = klant.Naam;
-			ViewBag.Adres = klant.Straat_Nr;
-			ViewBag.Gemeente = klant.Gemeente;
+			if(klant != null)
+			{
+				ViewBag.klantID = sessionVariabeklantId;
+				ViewBag.Naam = klant.Naam;
+				ViewBag.Adres = klant.Straat_Nr;
+				ViewBag.Gemeente = klant.Gemeente;
+			}
+			
 
 			
 		}
@@ -227,7 +226,10 @@ public class VideoController : Controller
 
 		ViewBag.totaal = totaal;
 
-			return View(lijstVerhuurdFilms);
+
+		// Adjust stock
+
+		return View(lijstVerhuurdFilms);
 		
 
 	}

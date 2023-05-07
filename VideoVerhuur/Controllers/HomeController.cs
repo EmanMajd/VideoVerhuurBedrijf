@@ -13,11 +13,11 @@ namespace VideoVerhuur.Controllers
 		{
 			_logger = logger;
 		}
-	
+
 
 		public IActionResult Index()
 		{
-			return View();
+			return Redirect("~/Video/Login");
 		}
 
 		[HttpPost]

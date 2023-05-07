@@ -14,8 +14,9 @@ builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession();
 
-builder.Services.AddTransient<VideoService>(); 
 builder.Services.AddTransient<IVideoVerhuurRepository, SQLVideoVerhuurRepository>();
+builder.Services.AddTransient<VideoService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
