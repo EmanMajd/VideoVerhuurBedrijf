@@ -133,14 +133,16 @@ public class VideoController : Controller
 	{
 		WinkelMandjeViewModel winkel = new WinkelMandjeViewModel();
 		List<Films>? verhuurdFilms = winkel.WinkelFilmsVoorKlant;
-		if( verhuurdFilms?.Count == 0 ) 
-			 verhuurdFilms = new List<Films>();
-		
-		verhuurdFilms.Add(film);
+		if( verhuurdFilms?.Count == 0 ) {
+			//verhuurdFilms = new List<Films>();
+			verhuurdFilms.Add(film);
+
+		}
+
 
 		if (!verhuurdFilms.Contains(film))
 		{
-			verhuurdFilms.Remove(film);
+			verhuurdFilms.Add(film);
 			winkel.Titel = film.Titel;
 			winkel.Prijs = film.Prijs;
 

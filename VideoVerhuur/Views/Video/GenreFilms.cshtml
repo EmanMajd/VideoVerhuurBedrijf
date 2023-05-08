@@ -29,7 +29,8 @@ else {
 					<td>@film.InVoorraad</td>
 					@if (@film.InVoorraad > 0)
 					{
-						<td><a asp-action="FilmVerhuren" asp-route-id="@film.FilmId">
+						@*asp - route - id = "@film.FilmId"*@
+						<td><a asp-action="FilmVerhuren" asp-route-film="@film">
 								<img class="icon" src="~/images/plus.png" asp-append-version="true" />
 						</a>
 					</td>

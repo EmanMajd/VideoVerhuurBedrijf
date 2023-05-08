@@ -11,5 +11,5 @@ public class WinkelMandjeViewModel
 	public string? Titel { get; set; }
 	public decimal Prijs { get; set; }
 
-	public List<Films>? WinkelFilmsVoorKlant { get; set; } 
+	public List<Films>? WinkelFilmsVoorKlant { get; set; } = new List<Films>();
 }
