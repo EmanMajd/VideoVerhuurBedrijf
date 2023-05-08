@@ -1,14 +1,20 @@
 ﻿@model LoginViewModel
-<h3>Welkom, Meld je aan om te kunnen huren!</h3>
+<h4>Welkom, Meld je aan om te kunnen huren!</h4>
+<span></span>
 <form asp-action="loginVerify" method="post">
 
 	<label asp-for="Naam"><h2>Naam</h2></label>
-	@Html.ValidationMessageFor(m => m.Naam)
+	@Html.ValidationMessageFor(m => m.Naam , "*")
 	<input asp-for="Naam" asp-route-id="Naam"/>
+	<span asp-validation-for="Naam"></span>
+
 	<label asp-for="Postcode"><h2>Postcode</h2></label>
-	@Html.ValidationMessageFor(m => m.Naam)
+	@Html.ValidationMessageFor(m => m.Postcode , "*")
 	<input asp-for="Postcode" asp-route-id="Postcode" />
+	<span asp-validation-for="Postcode"></span>
 
 
-	<input type="submit" value="Aanmelden" />
+	<input class="btn" type="submit" value="Aanmelden" />
 </form>
+
+<p> @ViewBag.ErrorMessage </p>

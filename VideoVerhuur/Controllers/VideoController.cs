@@ -28,7 +28,7 @@ public class VideoController : Controller
 		
 
 	}
-
+	[HttpGet]
 	public IActionResult Login()
 	{
 		var sessionVariabeNaam = HttpContext.Session.GetString("Naam");
@@ -62,7 +62,7 @@ public class VideoController : Controller
 		
 		if (naam == null || postcode == 0)
 		{
-			//ViewBag.ErrorMessage("Er is geen aangemelde gebruiker");
+			ViewBag.ErrorMessage = "Er is geen aangemelde gebruiker";
 			return View("Login");
 		}
 
@@ -73,6 +73,8 @@ public class VideoController : Controller
 			Klanten? klant = CheckGebruiker(naam, postcode);
 			if(klant == null)
 			{
+				ViewBag.ErrorMessage = "Onbekende klant, probeer opnieuw";
+
 				return View("Login");
 			}
 			else
@@ -113,7 +115,9 @@ public class VideoController : Controller
 	public IActionResult GenreFilms(int id)
 	{
 		Genres? genre = videoService.GetGenre(id);
-		if(genre == null)
+		ViewBag.Naam = HttpContext.Session.GetString("Naam");
+
+		if (genre == null)
 		{
 			ViewBag.ErrorMessage = $"Geen genre was found met dit id : {id}";
 			Redirect("Genres");
@@ -125,6 +129,25 @@ public class VideoController : Controller
 
 	}
 
+	public IActionResult FilmVerhuren(Films film)
+	{
+		WinkelMandjeViewModel winkel = new WinkelMandjeViewModel();
+		List<Films>? verhuurdFilms = winkel.WinkelFilmsVoorKlant;
+		if( verhuurdFilms?.Count == 0 ) 
+			 verhuurdFilms = new List<Films>();
+		
+		verhuurdFilms.Add(film);
+
+		if (!verhuurdFilms.Contains(film))
+		{
+			verhuurdFilms.Remove(film);
+			winkel.Titel = film.Titel;
+			winkel.Prijs = film.Prijs;
+
+		}
+		return View(winkel);
+	}
+	/*
 	public IActionResult FilmVerhuren(int id) {
 
 
@@ -158,7 +181,7 @@ public class VideoController : Controller
 		return Redirect("Genres");
 
 	}
-
+	*/
 	public IActionResult VerwijderFilm(int id)
 	{
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
@@ -173,7 +196,7 @@ public class VideoController : Controller
 			Films? film = videoService.FindFilm(id);
 			if(film != null && lijstVerhuurdFilms != null)
 			{
-				videoService.verwijderFilm(id);
+				//videoService.verwijderFilm(id);
 
 				lijstVerhuurdFilms.Remove(film);
 				var geserializeerdeLijst = JsonConvert.SerializeObject(lijstVerhuurdFilms);

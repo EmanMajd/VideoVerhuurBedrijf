@@ -12,8 +12,8 @@ using VideoVerhuurData.Models;
 namespace VideoVerhuurData.Migrations
 {
     [DbContext(typeof(VideoVerhuurDbContext))]
-    [Migration("20230414084017_adjust")]
-    partial class adjust
+    [Migration("20230507143147_creation")]
+    partial class creation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

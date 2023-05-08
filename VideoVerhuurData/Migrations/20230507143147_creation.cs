@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VideoVerhuurData.Migrations
 {
     /// <inheritdoc />
-    public partial class adjust : Migration
+    public partial class creation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

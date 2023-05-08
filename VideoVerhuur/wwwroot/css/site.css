@@ -3,8 +3,8 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
+ html {
+    font-size: 12px;
   }
 }
 
@@ -26,4 +26,52 @@ img.icon{
     height: 20px;
     width:20px;
 
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.btn {
+    background-color: blue;
+    color: white;
+}
+
+.afrekenen{
+    background-color:aqua;
+}
+
+a {
+    text-decoration: none;
+}
+
+.field-validation-error {
+    color: #ff0000;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.klik {
+    background-color:cyan;
+    color:cadetblue;
+    height:30px;
+    margin-bottom:10px;
 }

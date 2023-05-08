@@ -1,4 +1,4 @@
-﻿@model WinkelMandjeViewModel
+﻿@model IEnumerable<Films>
 
 	<table class="table table-bordered">
 		<thead>
@@ -9,7 +9,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var film in Model.WinkelFilmsVoorKlant)
+			@foreach (var film in Model)
 			{
 				<tr>
 					<td>@film.Titel</td>
@@ -25,7 +25,7 @@
 		</tbody>
 	</table>
 
-<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.WinkelFilmsVoorKlant.Last().GenreId">
+<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.ToList()[Model.Count()-1].GenreId">
 	Verder winkelen</a>
 
 <a class="btn btn-lg btn-warning afrekenen" asp-action="Afrekenen">
