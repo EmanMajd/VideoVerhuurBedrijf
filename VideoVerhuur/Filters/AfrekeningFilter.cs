@@ -12,13 +12,13 @@ public class AfrekeningFilter : ActionFilterAttribute
 		context.HttpContext.Session.Remove("klantID");
 		var sessionVariabeklantId = context.HttpContext.Session.GetInt32("klantID");
 
-		if (sessionVariabeklantId == null)
+		/*if (sessionVariabeklantId == null)
 		{
 
 			var viewResult = new ViewResult() { ViewName = "~/Views/Shared/login.cshtml" };
 			context.Result = viewResult;
 			context.HttpContext.Session.Clear();
 
-		}
+		}*/
 	}
 }

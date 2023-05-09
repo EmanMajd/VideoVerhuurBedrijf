@@ -210,7 +210,6 @@ public class VideoController : Controller
 		return View();
 	}
 
-	[AfrekeningFilter]
 	public IActionResult Afrekenen()
 	{
 
@@ -249,11 +248,15 @@ public class VideoController : Controller
 		ViewBag.totaal = totaal;
 
 
-		// Adjust stock
-
 		return View(lijstVerhuurdFilms);
 		
 
+	}
+
+	public IActionResult UitLogin()
+	{
+		HttpContext.Session.Clear();
+		return Redirect("Index");
 	}
 
 
