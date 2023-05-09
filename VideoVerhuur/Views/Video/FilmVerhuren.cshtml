@@ -19,12 +19,13 @@
 							<img class="icon" src="~/images/delete.png" asp-append-version="true" />
 						</a>
 					</td>
+
 				</tr>
 			}
 		</tbody>
 	</table>
 
-<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.Last().GenreId">
+<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@ViewBag.GenerId">
 	Verder winkelen</a>
 
 <a class="btn btn-lg btn-warning afrekenen" asp-action="Afrekenen">

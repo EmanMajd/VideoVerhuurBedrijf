@@ -163,7 +163,6 @@ public class VideoController : Controller
 	public IActionResult FilmVerhuren(int id)
 	{
 
-
 		Films? film = videoService.FindFilm(id);
 
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
@@ -173,26 +172,24 @@ public class VideoController : Controller
 		if (string.IsNullOrEmpty(sessionVariabeleVerhuurd))
 			lijstVerhuurdFilms = new List<Films>();
 
-
 		else
 			lijstVerhuurdFilms = JsonConvert.DeserializeObject<List<Films>>(sessionVariabeleVerhuurd);
 
+		
+			if(film!= null) {
 
-		if (film != null)
-		{
-			if (!lijstVerhuurdFilms.Contains((Films)film))
+			if (!lijstVerhuurdFilms.Exists(x => x.FilmId == film.FilmId))
 			{
 				lijstVerhuurdFilms?.Add(film);
-
-
 				var geserializeerdeLijst = JsonConvert.SerializeObject(lijstVerhuurdFilms);
 				HttpContext.Session.SetString("VerhuurdFilms", geserializeerdeLijst);
+			}
 
-				lijstVerhuurdFilms = lijstVerhuurdFilms.Distinct().ToList();
-				return View(lijstVerhuurdFilms);
+			ViewBag.GenerId = film.GenreId;
+			return View(lijstVerhuurdFilms);
 
 			}
-		}
+		
 			return Redirect("Genres");
 
 		
@@ -208,15 +205,17 @@ public class VideoController : Controller
 		{
 			 
 			lijstVerhuurdFilms = JsonConvert.DeserializeObject<List<Films>>(sessionVariabeleVerhuurd);
-			lijstVerhuurdFilms.ToList();
 			Films? film = videoService.FindFilm(id);
-			if(film != null && lijstVerhuurdFilms != null)
-			{
-				//videoService.verwijderFilm(id);
 
-				lijstVerhuurdFilms.Remove(film);
+			ViewBag.GenerId = film.GenreId;
+			if (film != null && lijstVerhuurdFilms != null)
+			{
+
+			//videoService.verwijderFilm(id);
+
+				var index = lijstVerhuurdFilms.FindIndex(x => x.FilmId == film.FilmId);
+				lijstVerhuurdFilms.RemoveAt(index);
 				var geserializeerdeLijst = JsonConvert.SerializeObject(lijstVerhuurdFilms);
-				HttpContext.Session.Remove("VerhuurdFilms");
 
 				HttpContext.Session.SetString("VerhuurdFilms", geserializeerdeLijst);
 
