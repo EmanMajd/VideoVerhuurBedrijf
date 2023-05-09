@@ -1,4 +1,4 @@
-﻿@model WinkelMandjeViewModel
+﻿@model List<Films>
 
 	<table class="table table-bordered">
 		<thead>
@@ -9,14 +9,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var film in Model.WinkelFilmsVoorKlant)
+			@foreach (var film in Model)
 			{
 				<tr>
 					<td>@film.Titel</td>
 					<td>@film.Prijs</td>
 					<td>
-					@*asp-route-id="@film.FilmId"*@
-						<a asp-action="VerwijderFilm"  asp-route-film="@film">
+						<a asp-action="VerwijderFilm" asp-route-id="@film.FilmId">
 							<img class="icon" src="~/images/delete.png" asp-append-version="true" />
 						</a>
 					</td>
@@ -25,8 +24,8 @@
 		</tbody>
 	</table>
 
-@*<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.WinkelFilmsVoorKlant.Last().GenreId">
-	Verder winkelen</a>*@
+<a class="btn btn-lg btn-warning" asp-action="GenreFilms" asp-route-id="@Model.Last().GenreId">
+	Verder winkelen</a>
 
 <a class="btn btn-lg btn-warning afrekenen" asp-action="Afrekenen">
 Afrekenen</a>

@@ -129,61 +129,75 @@ public class VideoController : Controller
 
 	}
 
-	public IActionResult FilmVerhuren(Films film)
+	/*public IActionResult FilmVerhuren(int id)
 	{
-		WinkelMandjeViewModel winkel = new WinkelMandjeViewModel();
-		List<Films>? verhuurdFilms = winkel.WinkelFilmsVoorKlant;
-		if( verhuurdFilms?.Count == 0 ) {
-			//verhuurdFilms = new List<Films>();
-			verhuurdFilms.Add(film);
 
-		}
-
-
-		if (!verhuurdFilms.Contains(film))
+		Films? film = videoService.FindFilm(id);
+		var winkelSessionVariable = HttpContext.Session.GetInt32("winkelSessionVariable");
+		WinkelMandjeViewModel winkel;
+		List<Films>? verhuurdFilms;
+		if (film != null)
 		{
-			verhuurdFilms.Add(film);
+			if (winkelSessionVariable <= 0)
+			{
+				winkel = new WinkelMandjeViewModel();
+				verhuurdFilms = winkel.WinkelFilmsVoorKlant;
+
+			}
+			else
+			{
+				verhuurdFilms.Add(film);
+
+				if (!verhuurdFilms.Contains(film))
+				{
+					verhuurdFilms.Add(film);
+
+				}
+			}
 			winkel.Titel = film.Titel;
 			winkel.Prijs = film.Prijs;
-
 		}
 		return View(winkel);
-	}
-	/*
-	public IActionResult FilmVerhuren(int id) {
+	}*/
+
+	public IActionResult FilmVerhuren(int id)
+	{
 
 
 		Films? film = videoService.FindFilm(id);
 
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
-		List<Films>? lijstVerhuurdFilms;
+		//var winkelSessionVariable = HttpContext.Session.GetInt32("winkelSessionVariable");
+
+		List<Films> lijstVerhuurdFilms;
 		if (string.IsNullOrEmpty(sessionVariabeleVerhuurd))
-				lijstVerhuurdFilms = new List<Films>(); 
+			lijstVerhuurdFilms = new List<Films>();
+
+
 		else
-				lijstVerhuurdFilms = JsonConvert.DeserializeObject<List<Films>>(sessionVariabeleVerhuurd);
+			lijstVerhuurdFilms = JsonConvert.DeserializeObject<List<Films>>(sessionVariabeleVerhuurd);
 
-		List<Films> ff = new List<Films>();
-			if (film != null && lijstVerhuurdFilms != null)
+
+		if (film != null)
+		{
+			if (!lijstVerhuurdFilms.Contains((Films)film))
 			{
-				//videoService.adjustFilmStock(id);
-			bool x = lijstVerhuurdFilms.Contains(film);
-			ViewBag.x = x;
-				if (!lijstVerhuurdFilms.Contains((object)film))
-				{
-					lijstVerhuurdFilms?.Add(film);
-					var geserializeerdeLijst = JsonConvert.SerializeObject(lijstVerhuurdFilms);
-					HttpContext.Session.SetString("VerhuurdFilms", geserializeerdeLijst);
+				lijstVerhuurdFilms?.Add(film);
 
-				}
-				
-			return View(lijstVerhuurdFilms);
+
+				var geserializeerdeLijst = JsonConvert.SerializeObject(lijstVerhuurdFilms);
+				HttpContext.Session.SetString("VerhuurdFilms", geserializeerdeLijst);
+
+				lijstVerhuurdFilms = lijstVerhuurdFilms.Distinct().ToList();
+				return View(lijstVerhuurdFilms);
 
 			}
+		}
+			return Redirect("Genres");
 
-		return Redirect("Genres");
-
+		
 	}
-	*/
+	
 	public IActionResult VerwijderFilm(int id)
 	{
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
