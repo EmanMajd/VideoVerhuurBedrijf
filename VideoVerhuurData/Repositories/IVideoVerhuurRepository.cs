@@ -28,4 +28,6 @@ public interface IVideoVerhuurRepository
 
 	void verwijderFilm(int id);
 
+	void addVerhuuring(int klantID, List<Films> films);
+
 }

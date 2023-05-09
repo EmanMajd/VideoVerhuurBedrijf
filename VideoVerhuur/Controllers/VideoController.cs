@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using VideoVerhuur.Filters;
 using VideoVerhuur.Models;
 using VideoVerhuurData.Models;
 using VideoVerhuurData.Repositories;
 
 namespace VideoVerhuur.Controllers;
-
+[LoginFilter]
 public class VideoController : Controller
 {
 
@@ -192,7 +193,6 @@ public class VideoController : Controller
 			if (film != null && lijstVerhuurdFilms != null)
 			{
 
-			//videoService.verwijderFilm(id);
 
 				var index = lijstVerhuurdFilms.FindIndex(x => x.FilmId == film.FilmId);
 				lijstVerhuurdFilms.RemoveAt(index);
@@ -210,38 +210,41 @@ public class VideoController : Controller
 		return View();
 	}
 
+	[AfrekeningFilter]
 	public IActionResult Afrekenen()
 	{
 
 		var sessionVariabeklantId = HttpContext.Session.GetInt32("klantID");
-
+		Klanten kalnt;
 		if (sessionVariabeklantId != null)
 		{
-			var klant = videoService.FindKlant((int)sessionVariabeklantId);
-			if(klant != null)
+			kalnt = videoService.FindKlant((int)sessionVariabeklantId);
+			if(kalnt != null)
 			{
 				ViewBag.klantID = sessionVariabeklantId;
-				ViewBag.Naam = klant.Naam;
-				ViewBag.Adres = klant.Straat_Nr;
-				ViewBag.Gemeente = klant.Gemeente;
+				ViewBag.Naam = kalnt.Naam;
+				ViewBag.Adres = kalnt.Straat_Nr;
+				ViewBag.Gemeente = kalnt.Gemeente;
 			}
-			
-
-			
+				
 		}
 
-			var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
+		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
 		List<Films>? lijstVerhuurdFilms = new List<Films>();
 		if (string.IsNullOrEmpty(sessionVariabeleVerhuurd))
-			ViewBag.ErrorMessage("Fout gebeurd met afrekening");
+			ViewBag.ErrorMessage("Je moet eerst een film verhuuren");
 		else
 			lijstVerhuurdFilms = JsonConvert.DeserializeObject<List<Films>>(sessionVariabeleVerhuurd);
+
+		videoService.addVerhuuring((int)sessionVariabeklantId, lijstVerhuurdFilms);
 
 		decimal totaal = 0;
 		foreach(var film in lijstVerhuurdFilms)
 		{
+			videoService.adjustFilmStock(film.FilmId);
 			totaal += film.Prijs;
 		}
+		videoService.addVerhuuring((int)sessionVariabeklantId, lijstVerhuurdFilms);
 
 		ViewBag.totaal = totaal;
 

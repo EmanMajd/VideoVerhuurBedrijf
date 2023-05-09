@@ -72,6 +72,25 @@ public class SQLVideoVerhuurRepository : IVideoVerhuurRepository
 
 	}
 
+	public void addVerhuuring(int klantID, List<Films> films)
+	{
+
+		if(films.Count() >0 && klantID >= 0)
+		{
+			foreach(var film in films)
+			{
+				var verhuurdFilm = new Verhuringen();
+				verhuurdFilm.KlantId = klantID;
+				verhuurdFilm.FilmId = film.FilmId;
+				verhuurdFilm.VerhuurDatum = DateTime.Now;
+				context.Verhuringen.Add(verhuurdFilm);
+			}
+			
+
+		}
+	}
+
+
 
 
 

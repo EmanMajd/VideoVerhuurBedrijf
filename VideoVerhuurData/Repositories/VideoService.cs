@@ -60,6 +60,10 @@ public class VideoService
 		VideoRepository.verwijderFilm(id);
 	}
 
+	public void addVerhuuring(int klantID, List<Films> films)
+	{
+		VideoRepository.addVerhuuring(klantID,films);
+	}
 
 
 
