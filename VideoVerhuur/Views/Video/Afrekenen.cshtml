@@ -2,13 +2,12 @@
 @{
 		ViewData["Title"] = "Afrekenen";
 }
-<p>Afrekenen</p>
+<h3>Afrekenen</h3>
 <table class="table table-bordered">
 	<thead>
 		<tr>
 			<td>Titel</td>
 			<td>Prijs</td>
-
 		</tr>
 	</thead>
 	<tbody>
@@ -22,12 +21,13 @@
 			
 		}
 		<tr>
+			<td>Totaal</td>
 			<td>@ViewBag.totaal</td>
 		</tr>
 	</tbody>
 </table>
 
-<h3>Wordt afgereknd aan: </h3>
-<h4>@ViewBag.Naam</h4>
-<h4>@ViewBag.Adres</h4>
-<h4>@ViewBag.Gemeente</h4>
+<h3>Wordt afgereknd aan: <br /></h3>
+<h5>@ViewBag.Naam <br /></h5>
+<h5>@ViewBag.Adres <br/></h5>
+<h5>@ViewBag.Gemeente <br /></h5>

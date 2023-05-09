@@ -129,36 +129,7 @@ public class VideoController : Controller
 
 	}
 
-	/*public IActionResult FilmVerhuren(int id)
-	{
-
-		Films? film = videoService.FindFilm(id);
-		var winkelSessionVariable = HttpContext.Session.GetInt32("winkelSessionVariable");
-		WinkelMandjeViewModel winkel;
-		List<Films>? verhuurdFilms;
-		if (film != null)
-		{
-			if (winkelSessionVariable <= 0)
-			{
-				winkel = new WinkelMandjeViewModel();
-				verhuurdFilms = winkel.WinkelFilmsVoorKlant;
-
-			}
-			else
-			{
-				verhuurdFilms.Add(film);
-
-				if (!verhuurdFilms.Contains(film))
-				{
-					verhuurdFilms.Add(film);
-
-				}
-			}
-			winkel.Titel = film.Titel;
-			winkel.Prijs = film.Prijs;
-		}
-		return View(winkel);
-	}*/
+	
 
 	public IActionResult FilmVerhuren(int id)
 	{
@@ -166,7 +137,6 @@ public class VideoController : Controller
 		Films? film = videoService.FindFilm(id);
 
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");
-		//var winkelSessionVariable = HttpContext.Session.GetInt32("winkelSessionVariable");
 
 		List<Films> lijstVerhuurdFilms;
 		if (string.IsNullOrEmpty(sessionVariabeleVerhuurd))
@@ -194,7 +164,18 @@ public class VideoController : Controller
 
 		
 	}
-	
+
+	public IActionResult verwijder(int id)
+	{
+		Films? film = videoService.FindFilm(id);
+		if(film != null )
+		{
+			ViewBag.Film = film;
+		}
+
+			return View(film);
+	}
+
 	public IActionResult VerwijderFilm(int id)
 	{
 		var sessionVariabeleVerhuurd = HttpContext.Session.GetString("VerhuurdFilms");

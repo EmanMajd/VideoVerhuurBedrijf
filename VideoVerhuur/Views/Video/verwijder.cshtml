@@ -1,0 +1,11 @@
+﻿@model Films
+
+<h3>Verwijder Gehuurd Film</h3>
+<h5>"@Model.Titel" verwijderen uit jouw winkelMandje ?</h5>
+
+<a class="btn btn-lg btn-warning" asp-action="VerwijderFilm" asp-route-id="@Model.FilmId">
+	Ja
+</a>
+
+<a class="btn btn-lg btn-warning" asp-action="FilmVerhuren" asp-route-id="@Model.FilmId">
+Nee</a>
